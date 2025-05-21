@@ -1,0 +1,54 @@
+"Name"     = 'Zlang Python-Like Syntax'
+"Author"   = 'Ziad Yousef'
+"Version"  = '1.0'
+"About"    = 'A Python-like syntax grammar'
+
+"Start Symbol" = <Program>
+
+! -----------------------------------------------
+! Character Sets
+! -----------------------------------------------
+
+{ID Head}      = {Letter} + [_]
+{ID Tail}      = {Alphanumeric} + [_]
+{String Chars} = {Printable} + {HT} - ["\]
+
+! -----------------------------------------------
+! Terminals
+! -----------------------------------------------
+
+Identifier     = {ID Head}{ID Tail}*
+Number         = {Digit}+
+StringLiteral  = '"' ( {String Chars} | '\' {Printable} )* '"'
+Semicolon      = ';'
+Colon          = ':'
+NewLine        = '\n'
+
+! -----------------------------------------------
+! Rules
+! -----------------------------------------------
+
+<Program> ::= <StatementList>
+
+<StatementList> ::= 
+                 | <StatementList> <Statement>
+                 | <Statement>
+
+<Statement> ::= 'let' Identifier '=' <Expression> Semicolon
+              | 'if' <Expression> Colon NewLine <StatementList>
+              | 'if' <Expression> Colon NewLine <StatementList> 'else' Colon NewLine <StatementList>
+              | 'while' <Expression> Colon NewLine <StatementList>
+              | 'print' <Expression> Semicolon
+
+<Expression> ::= <Expression> '+' <Term>
+               | <Expression> '-' <Term>
+               | <Term>
+
+<Term>      ::= <Term> '*' <Factor>
+             | <Term> '/' <Factor>
+             | <Factor>
+
+<Factor>    ::= Identifier
+             | Number
+             | StringLiteral
+             | '(' <Expression> ')'
