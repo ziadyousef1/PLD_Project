@@ -4,7 +4,7 @@
 
 
 ### Lexical Analysis
-![Lexical Analysis](./Demo/Syntax.png)
+![Lexical Analysis](./Demo/Lexcial.png)
 
 ### Syntax Analysis
 ![Syntax Analysis](./Demo/Syntax.png)
